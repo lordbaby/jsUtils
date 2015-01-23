@@ -20,3 +20,10 @@ JavaScript工具仓库
 5. 效果  
 
 	![mp_01](/images/mp_01.png)
+
+###Hash操作类
+针对window.location.hash进行增删改查
+1. 增加/修改 <code>Hash.add({ key:value })</code>
+2. 删除 <code>Hash.remove([key1,key2])</code>
+3. 查询 <code>Hash.get('key')</code>
+4. 清空 <code>Hash.clear()</code>
