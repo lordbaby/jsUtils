@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父窗体</title>
+	<style type="text/css">
+		.wrapper{
+			padding: 10px;
+			margin: 0 auto;
+			width: 900px;
+			min-height: 500px;
+			border:1px solid #ccc;
+			border-radius: 5px;
+		}
+		.slide{
+			float: left;
+		}
+		.content{
+			float: left;
+			margin-left: 20px;
+		}
+	</style>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<script type="text/javascript" src="../mp.js"></script>
+</head>
+<body>
+<div class="wrapper">
+	<div class="slide">
+		<iframe src="sendMsg.html" width="200" height="500" ></iframe>
+	</div>
+	<div class="content">
+		<iframe src="recieveMsg.html" width="300" height="500" ></iframe>
+	</div>
+</div>
+	
+</body>
+</html>

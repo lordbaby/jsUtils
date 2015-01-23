@@ -2,8 +2,8 @@
  * 客户端通用消息门户框架
  * @returns {undefined}
  */
-if(typeof rfmp=="undefined"){
-    rfmp = {loaded: true};
+if(typeof MP=="undefined"){
+    MP = {loaded: true};
     (function(jQuery){
         "use strict";
         var MPBUS = {
@@ -47,20 +47,20 @@ if(typeof rfmp=="undefined"){
                         }
                     }
                     try{
-                        retOwn = v.hasOwnProperty('RFMP'); //IE 6以下该行出错
+                        retOwn = v.hasOwnProperty('MP'); //IE 6以下该行出错
                     }catch(err){
                         try{
-                            retOwn = Object.prototype.hasOwnProperty.call(v, 'RFMP'); //firefox跨窗口是该行返回值错误
+                            retOwn = Object.prototype.hasOwnProperty.call(v, 'MP'); //firefox跨窗口是该行返回值错误
                         }catch(err1){
                             //ie8时没有.closed属性，所以catch异常删除过期window
                             delete this.allWin[q];
                             retOwn = false;
                         }
                     }
-                    //if (Object.prototype.hasOwnProperty.call(v, 'RFMP') /*v.hasOwnProperty('RFMP')*/ && v.RFMP !== null && v.RFMP !== undefined) {
-                    if(retOwn&&v.RFMP!==null&&v.RFMP!==undefined){
+                    //if (Object.prototype.hasOwnProperty.call(v, 'MP') /*v.hasOwnProperty('MP')*/ && v.MP !== null && v.MP !== undefined) {
+                    if(retOwn&&v.MP!==null&&v.MP!==undefined){
                         try{
-                            v.RFMP._fire.call(v.RFMP, event, data, type);
+                            v.MP._fire.call(v.MP, event, data, type);
                         }catch(e){
                             try{
                                 delete this.allWin[q];
@@ -104,7 +104,7 @@ if(typeof rfmp=="undefined"){
                 });
             }
         };
-        var RFMP = {
+        var MP = {
             /**
              * 消息总线所在窗口
              */
@@ -130,7 +130,7 @@ if(typeof rfmp=="undefined"){
             /**
              *  获得消息总线窗口
              * @param {type} win
-             * @returns {@exp;win@pro;RFMP_Windows}
+             * @returns {@exp;win@pro;MP_Windows}
              */
             _getBusWindow: function(win){
                 if(win===undefined||win===null)
@@ -248,9 +248,9 @@ if(typeof rfmp=="undefined"){
                 }
             }
         };
-        window.RFMP = RFMP;
-        RFMP.register(window);
+        window.MP = MP;
+        MP.register(window);
 
-//        //window.onunload = RFMP.unregister(window);
+//        //window.onunload = MP.unregister(window);
     })(jQuery);
 }
