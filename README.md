@@ -24,7 +24,7 @@ JavaScript工具仓库
 ###Hash操作类
 针对window.location.hash进行增删改查  
 
-1. 增加/修改 ```javascript Hash.add({ key:value })```
-2. 删除 ```javascript Hash.remove([key1,key2])```
-3. 查询 ```javascript Hash.get('key')```
-4. 清空 ```javascript Hash.clear()```
+1. 增加/修改 ```javascript    Hash.add({ key:value })```
+2. 删除 ```javascript     Hash.remove([key1,key2])```
+3. 查询 ```javascript     Hash.get('key')```
+4. 清空 ```javascript     Hash.clear()```
