@@ -151,7 +151,7 @@ function Loading(divId, containerId) {
     div.style.paddingLeft = "25px";
     div.style.marginLeft = "-80px";
     div.style.marginTop = "-15px";
-    div.style.backgroundImage = "url(http://skin.huitu.com/images/loading.gif)";
+    div.style.backgroundImage = "url(images/loading.gif)";
     div.style.backgroundRepeat = "no-repeat";
     div.style.backgroundPosition = "5px center";
     div.style.backgroundColor = "#FFEBA7";
