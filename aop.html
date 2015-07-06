@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button">button1</button>
+    
+    <form>
+      用户名：<input type="text" id="name" />
+      密码：<input type="password" id="pwd" />
+      <button id="submit">提交</button>
+    </form>
+    
+    
+    <script type="text/javascript">
+    /*
+    aop 面向切面编程，主要是框架级层面功能穿插于业务逻辑中，比如在装饰者模式中
+    */
+    
+    //AOP装饰函数
+    Function.prototype.before = function(beforeFn) {
+        var _self = this; //保存对原函数的引用
+        return function() { //返回包含原函数和新函数的代理函数
+            beforeFn.apply(this, arguments); //执行新函数，且保证this不被劫持，
+            //新函数接受的参数也会原封不动的传入原函数，
+            //新函数在原函数之前执行
+            return _self.apply(this, arguments); //执行原函数，并返回原函数的执行结果
+        }
+    }
+    Function.prototype.after=function(afterFn){
+      var _self=this;
+      return function(){
+        var ret=_self.apply(this,arguments);
+        afterFn.apply(this,arguments);
+        return ret;
+      }
+    }
+    
+    //before方法中 beforeFn和_self都是用的同一个arguments，beforeFn的函数体内改变arguments，原函数_self也会发生改变
+    //例子：
+    var func=function(param){
+      console.log(param) //{ a:'a',b:'b'}
+    }
+    func=func.before(function(param){
+      param.b='b';
+    })
+    
+    func({a:'b'}) //输出{ a:'a',b:'b'}
+    
+    //比如在ajax请求函数中,为了防止CSRF攻击，我们需要在http请求中带一个token参数
+    var getToken=function(){
+      return 'Token'
+    }
+    
+    var ajax=function(type,url,param){ console.dir(param)  //函数体 }
+    ajax=ajax.before(function(type,url,param){
+      param.token=getToken();
+    })
+    ajax('get','http://xxx.com/getSomething',{name:'xxx'});
+    //输出{name:'xxx',token:'Token'};
+    //明显可以看到，利用AOP的方式给ajax函数动态装饰上了token参数，保证ajax函数是一个相对纯净的函数。
+    
+    //比如在form表单提交的时候一般有2个步骤，1表单验证，2数据提交
+    
+    var name=document.getElementById('name'),pwd=docment.getElementById('pwd'),submit=document.getElementById('submit');
+    //校验函数
+    var validate=function(){
+      if(name.value===''||pwd.value===''){
+        return alert('用户名或密码不为空');
+      }
+    }
+    //数据提交
+    var formSubmit=function(){
+      var param={
+        name:name.value,
+        pwd:pwd.value
+      }
+      ajax('post','http://xxx.com/login',param);
+    }
+    //把校验规则动态的接在提交表单之前
+    formSubmit=formSubmit.before(validate)
+    
+    submit.onclick=function(){
+      formSubmit();
+    }
+    //这样校验和提交表单完全分离开来
+    
+    //装饰者模式一开始不能确定对象的全部功能。有区别有代理模式。
+    </script>
+</body>
+
+</html>
