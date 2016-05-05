@@ -525,3 +525,26 @@ function animateScroll(element, childTagName) {
         }, 3000);
     }
 }
+
+/*
+fn:将被调用的函数
+start:fn被调用的起始时间（即几秒后开始调用）
+interval:循环调用的时间间隔（即隔几秒调用一次）
+end:停止调用的时间
+*/
+function invoke(fn,start,interval,end){
+  if(!start) start=0;
+  if(arguments.length<=2){
+     setTimeout(fn,start);	
+  }else{
+     setTimeout(repeat,start);
+     function repeat(){
+  	   var h= setInterval(fn,interval);
+  	   if(end){
+  	      setTimeout(function(){
+  	   	clearInterval(h);
+  	      },end)
+  	   }
+     }
+  }
+}
