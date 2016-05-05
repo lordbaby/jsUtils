@@ -548,3 +548,24 @@ function invoke(fn,start,interval,end){
      }
   }
 }
+
+/*
+解析url中的参数， 返回object{ key : value}
+*/
+function urlArgs(){
+	var args={},
+		query=location.search.substring(1),
+		pairs=query.split('&');
+	for(var i=0,len=pairs.length;i<len;i++){
+		var pos=pairs[i].indexOf('=');
+		if(pos==-1){
+			continue;
+		}
+		var name=pairs[i].substring(0,pos),
+		value=pairs[i].substring(pos+1);
+		value=decodeURIComponent(value);
+		args[name]=value;
+	}
+	
+	return args;
+}
