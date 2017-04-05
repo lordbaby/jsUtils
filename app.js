@@ -1,5 +1,3 @@
-// npm init -y   =>  cnpm install =>  node app || node app 你的ID
-
 const http = require("http")
 const fs = require("fs")
 const parse = require("url").parse
@@ -13,7 +11,12 @@ let titles = []
 const overtimes = []
 const errors = []
 
+const resolvePath = (path) => {
+	return path.replace(/\?/g, '');
+}
+
 const request = (url) => {
+
 	return new Promise((resolve, reject) => {
 		http.request({
 			hostname: parse(url).hostname,
@@ -39,6 +42,7 @@ const request = (url) => {
 }
 
 const requestImage = (url, path) => {
+
 	return new Promise((resolve, reject) => {
 		http.request({
 			hostname: parse(url).hostname,
@@ -54,6 +58,8 @@ const requestImage = (url, path) => {
 			}
 
 			const filename = url.match(/\w+\.\w+$/g)[0]
+
+			path = resolvePath(path)
 
 			res.pipe(fs.createWriteStream(`${path}/${filename}`))
 
@@ -91,9 +97,17 @@ const getTargetURLs = (url) => {
 	})
 }
 
+
 const createDir = (path) => {
+	
+	path = resolvePath(path)
+
+	//console.log(path);
+
 	return new Promise((resolve, reject) => {
+
 		fs.stat(path, (error, stats) => {
+
 			if (error && error.code === "ENOENT") {
 				fs.mkdir(path, () => {
 					resolve()
@@ -105,6 +119,8 @@ const createDir = (path) => {
 	})
 }
 
+
+
 const bbb = () => {
 	const url = urls.pop()
 
@@ -112,6 +128,8 @@ const bbb = () => {
 	console.log(` 开始捕获 ${titles[urls.length]}`)
 
 	let path = `${__dirname}/images/${titles[urls.length]}`
+
+	
 
 	Promise.all([createDir(path), analyseMeizhi(url)]).then(([, aa]) => {
 		getMeizhi(aa, path)
@@ -129,6 +147,8 @@ const analyseMeizhi = (url) => {
 			console.log(` 共 ${total} 只妹纸~~`)
 			console.log()
 
+			console.log(url);
+
 			while (total) {
 				aa.unshift(`${url}/${total}`)
 
@@ -143,6 +163,7 @@ const analyseMeizhi = (url) => {
 }
 
 const getMeizhi = (aa, path) => {
+
 	const total = aa.length
 	const count = Math.ceil(total / 10)
 
